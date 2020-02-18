@@ -1,0 +1,28 @@
+{
+  "name": "hashcodepractice",
+  "version": "1.0.0",
+  "description": "google hash code practice",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf build/ && npx tsc",
+    "start": "node --harmony build/index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baraou/hashCodePractice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baraou/hashCodePractice/issues"
+  },
+  "homepage": "https://github.com/baraou/hashCodePractice#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^13.7.1",
+    "nodemon": "^2.0.2",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  }
+}
