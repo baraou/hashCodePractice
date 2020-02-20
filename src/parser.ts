@@ -1,5 +1,6 @@
 import fs from 'fs';
 import assert from 'assert';
+import { uniqWith, orderBy } from 'lodash';
 
 export type Book = {
   id: number,
@@ -42,7 +43,12 @@ export function parser(filename: string): Input {
     const booksId = libraryBooksIds.map(v => Number(v))
     const libraryBooks = booksId.map(id => books[id]);
 
-    libraries.push({ id: i, signupTime, books: libraryBooks, booksPerDay });
+    const uniqueBooks = uniqWith(libraryBooks, (v, w) => v.id === w.id);
+    const sortedBooks = orderBy(uniqueBooks, v => v.score, 'desc');
+
+    libraries.push({ id: i, signupTime, books: sortedBooks, booksPerDay });
+
+
   }
 
   return { books, libraries, days };
