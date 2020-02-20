@@ -64,6 +64,7 @@ export function resolve(input: Input) {
 
   let libraries = input.libraries;
   let days = input.days;
+  const res = [];
 
   while (!!libraries.length) {
     const best = sort(libraries, days);
@@ -71,10 +72,11 @@ export function resolve(input: Input) {
     if (!best.books.length) break;
 
     days -= best.signupTime;
+    res.push(best);
     libraries = filter(libraries, (library) => library.id != best.id);
     libraries = removeLibrary(best, libraries);
     output.libraries.push(best);
   }
 
-  return output;
+  return { libraries: res };
 }
