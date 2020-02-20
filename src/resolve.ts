@@ -1,22 +1,23 @@
-function add(a: number, b: { id: number, value: number}) {
-  return a + b.value;
-}
+import { Book, Library, Input } from './parser';
+import { Output } from './print';
 
-export function resolve(data: { maxSlices: number, typeCount: number, slicesCount: number[] } | null) {
-  if (!data) return { pizzas: [], slices: 0 };
-  const total = data.slicesCount.reduceRight((total: { pizzas: number[], slices: number }, slices: number, key: number) => {
-    const tmp = total.slices + slices;
-    if (tmp < data.maxSlices) return { pizzas: [...total.pizzas, key], slices: total.slices + slices };
-    return total;
-  }, { pizzas: [], slices: 0 });
-  // let slices: { id: number, value: number}[] = [];
-  // for (let i = data.slicesCount.length - 1; i > -1; --i) {
-  //   const curr = data.slicesCount[i];
-  //   const total = slices.reduce(add, 0);
-  //   if (total === data.maxSlices) break;
-  //   if (total > data.maxSlices) {
+// export type Book = {
+//   score: number,
+// };
 
-  //   }
-  // }
-  return total;
+// export type Library = {
+//   signupTime: number,
+//   booksId: number[],
+//   booksPerDay: number,
+// };
+
+// export type Input = {
+//   books: Book[],
+//   libraries: Library[],
+//   days: number,
+// };
+
+export function resolve(input: Input) {
+  const output: Output = { libraries: input.libraries };
+  return output;
 }
