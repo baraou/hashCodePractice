@@ -3,23 +3,6 @@ import { map, sumBy, orderBy, find, filter, differenceBy } from 'lodash';
 import { Book, Library, Input } from './parser';
 import { Output } from './print';
 
-// export type Book = {
-//   score: number,
-//   id: number,
-// };
-
-// export type Library = {
-//   signupTime: number,
-//   books: Book[],
-//   booksPerDay: number,
-// };
-
-// export type Input = {
-//   books: Book[],
-//   libraries: Library[],
-//   days: number,
-// };
-
 const blacklist = new Map<number, boolean>();
 
 function removeLibrary(toRemove: Library, libraries: Library[]): Library[] {
@@ -27,12 +10,7 @@ function removeLibrary(toRemove: Library, libraries: Library[]): Library[] {
 
   bookIds.forEach(id => { blacklist.set(id, true) });
 
-  const filteredLibraries = libraries.map(library => ({
-    ...library,
-    books: library.books.filter(book => !blacklist.has(book.id)),
-  }));
-
-  return filteredLibraries;
+  return libraries;
 }
 
 function scoreLibrary(library: Library, days: number): { library: Library, score: number } {
