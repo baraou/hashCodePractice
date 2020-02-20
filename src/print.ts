@@ -13,6 +13,6 @@ export function print(output: Output, filename: string | undefined) {
     // ID numberOfBooksToBeScanned
     // IDS list no duplicates
   let result = `${output.libraries.length}\n`;
-  forEach(output.libraries, (library, key) => result = `${result}${key} ${library.books.length}\n${library.books.map(b => b.id).join(' ')}\n`);
+  forEach(output.libraries, (library, key) => result = `${result}${library.id} ${library.books.length}\n${library.books.map(b => b.id).join(' ')}\n`);
   fs.writeFileSync(`./outputs/${filename}`, result);
 }

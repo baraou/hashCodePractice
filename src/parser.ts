@@ -47,8 +47,6 @@ export function parser(filename: string): Input {
     const sortedBooks = orderBy(uniqueBooks, v => v.score, 'desc');
 
     libraries.push({ id: i, signupTime, books: sortedBooks, booksPerDay });
-
-
   }
 
   return { books, libraries, days };
