@@ -2,13 +2,14 @@ import fs from 'fs';
 import assert from 'assert';
 
 export type Book = {
+  id: number,
   score: number,
 };
 
 export type Library = {
   id: number,
   signupTime: number,
-  booksId: number[],
+  books: Book[],
   booksPerDay: number,
 };
 
@@ -29,16 +30,19 @@ export function parser(filename: string): Input {
   const booksScore = byLine[1].split(' ');
   assert(booksScore.length === booksCount);
 
-  const books = booksScore.map(v => ({score: Number(v)}));
+  const books = booksScore.map((v,index) => ({id: index, score: Number(v)}));
   const libraries: Library[] = new Array();
 
   let line = 2;
   for (let i = 0; i < libsCount; i++, line += 2) {
-    const [libraryBooks, signupTime, booksPerDay] = byLine[line].split(' ').map(v => Number(v));
+    const [libraryBooksCount, signupTime, booksPerDay] = byLine[line].split(' ').map(v => Number(v));
     const libraryBooksIds = byLine[line+1].split(' ');
+    assert(libraryBooksCount === libraryBooksIds.length);
+
     const booksId = libraryBooksIds.map(v => Number(v))
-    assert(libraryBooks === libraryBooksIds.length);
-    libraries.push({ id: i, signupTime, booksId , booksPerDay });
+    const libraryBooks = booksId.map(id => books[id]);
+
+    libraries.push({ id: i, signupTime, books: libraryBooks, booksPerDay });
   }
 
   return { books, libraries, days };
