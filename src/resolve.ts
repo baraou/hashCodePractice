@@ -24,7 +24,10 @@ function removeLibrary(toRemove: Library, libraries: Library[]): Library[] {
   const bookIds = toRemove.books.map(book => book.id);
   const filteredLibraries = libraries.map(library => ({
     ...library,
-    books: library.books.filter(book => bookIds.indexOf(book.id) >= 0)
+    books: library.books.filter(book => {
+      const tmp = !(bookIds.indexOf(book.id) >= 0);
+      return tmp;
+    })
   }));
   return filteredLibraries;
 }
@@ -34,22 +37,22 @@ function sort(libraries: Library[], days: number): any {
     const books = library.books.slice(0, (days - library.signupTime) * library.booksPerDay);
     const score = sumBy(books, 'score');
     return { libraryId: library.id, score };
-  }), 'score');
+  }), 'score', 'desc');
   return find(libraries, { id: sorted[0].libraryId });
 }
 
 export function resolve(input: Input) {
-  const output: Output = { libraries: input.libraries };
-
   let libraries = input.libraries;
   let days = input.days;
+  const res = [];
 
   while (!!libraries.length) {
     const best = sort(libraries, days);
     days -= best.signupTime;
+    res.push(best);
     libraries = filter(libraries, (library) => library.id != best.id);
     libraries = removeLibrary(best, libraries);
   }
 
-  return output;
+  return { libraries: res };
 }
